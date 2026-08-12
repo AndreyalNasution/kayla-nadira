@@ -17,8 +17,11 @@ function pad(n){ return String(n).padStart(2,'0'); }
 function startMusic(){
   if(!musicPlayer) return;
 
+  musicPlayer.preload = 'auto';
   musicPlayer.muted = false;
   musicPlayer.volume = 0.8;
+  musicPlayer.currentTime = 0;
+  musicPlayer.pause();
   musicPlayer.load();
 
   const playPromise = musicPlayer.play();
@@ -26,6 +29,14 @@ function startMusic(){
     playPromise.catch(() => {});
   }
 }
+
+function primeMusic(){
+  if(!musicPlayer) return;
+  musicPlayer.preload = 'auto';
+  musicPlayer.load();
+}
+
+document.addEventListener('pointerdown', primeMusic, { once: true });
 
 envelope.addEventListener('click', openEnvelope);
 
