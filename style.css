@@ -456,6 +456,27 @@ main{
   letter-spacing: .5px;
 }
 
+.music-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-top: 14px;
+  padding: 9px 14px;
+  border-radius:999px;
+  border: 1px solid rgba(159, 47, 80, 0.14);
+  background: rgba(255,255,255,0.72);
+  color: var(--rose-deep);
+  text-decoration:none;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  box-shadow: 0 10px 20px rgba(159, 47, 80, 0.08);
+}
+
+.music-link:hover{
+  transform: translateY(-1px);
+}
+
 @media (max-width: 380px){
   .card{ padding: 20px; }
   .message{ font-size: 17px; }
