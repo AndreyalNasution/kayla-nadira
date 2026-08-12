@@ -20,10 +20,6 @@ function startMusic(){
   musicPlayer.preload = 'auto';
   musicPlayer.muted = false;
   musicPlayer.volume = 0.8;
-  musicPlayer.currentTime = 0;
-  musicPlayer.pause();
-  musicPlayer.load();
-
   const playPromise = musicPlayer.play();
   if(playPromise && typeof playPromise.catch === 'function'){
     playPromise.catch(() => {});
@@ -64,11 +60,39 @@ function renderCountdown(){
 }
 
 let opened = false;
-function openEnvelope(){
-  if(opened) return;
+let opening = false;
+let openingTimer = null;
+
+function runOpeningCountdown(){
+  if(!timerEl) return;
+
+  const steps = [4, 3, 2, 1];
+  let index = 0;
+
+  timerEl.classList.add('countdown-open');
+
+  timerEl.innerHTML = steps[index] + '<span class="unit">detik</span>';
+
+  openingTimer = setInterval(() => {
+    index += 1;
+
+    if(index < steps.length){
+      timerEl.innerHTML = steps[index] + '<span class="unit">detik</span>';
+      return;
+    }
+
+    clearInterval(openingTimer);
+    openingTimer = null;
+    finishOpening();
+  }, 1000);
+}
+
+function finishOpening(){
+  opening = false;
   opened = true;
   hintEl.textContent = 'membuka surat...';
   envelope.classList.add('open');
+  timerEl.classList.remove('countdown-open');
 
   startMusic();
 
@@ -80,6 +104,20 @@ function openEnvelope(){
       revealStage.classList.add('show');
     }, 550);
   }, 1200);
+}
+
+function openEnvelope(){
+  if(opened || opening) return;
+
+  opening = true;
+  hintEl.textContent = 'siap...';
+
+  if(openingTimer){
+    clearInterval(openingTimer);
+    openingTimer = null;
+  }
+
+  runOpeningCountdown();
 }
 
 renderCountdown();
