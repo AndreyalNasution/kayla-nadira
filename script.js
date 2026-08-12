@@ -10,30 +10,11 @@ const hintEl = document.getElementById('hint');
 const envelope = document.getElementById('envelope');
 const envelopeStage = document.getElementById('envelope-stage');
 const revealStage = document.getElementById('reveal-stage');
-const musicLink = document.getElementById('musicLink');
 const musicPlayer = document.getElementById('musicPlayer');
 
 function pad(n){ return String(n).padStart(2,'0'); }
 
 envelope.addEventListener('click', openEnvelope);
-
-if(musicLink && musicPlayer){
-  musicLink.addEventListener('click', async (event) => {
-    event.preventDefault();
-
-    if(musicPlayer.paused){
-      try{
-        await musicPlayer.play();
-        musicLink.textContent = 'lagu diputar';
-      }catch(error){
-        musicLink.textContent = 'klik lagi untuk putar';
-      }
-    } else {
-      musicPlayer.pause();
-      musicLink.textContent = 'putar lagu';
-    }
-  });
-}
 
 function renderCountdown(){
   const now = new Date();
@@ -66,11 +47,7 @@ function openEnvelope(){
   envelope.classList.add('open');
 
   if(musicPlayer && musicPlayer.paused){
-    musicPlayer.play().then(() => {
-      if(musicLink) musicLink.textContent = 'lagu diputar';
-    }).catch(() => {
-      if(musicLink) musicLink.textContent = 'klik link untuk putar lagu';
-    });
+    musicPlayer.play().catch(() => {});
   }
 
   setTimeout(() => {
