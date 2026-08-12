@@ -14,6 +14,19 @@ const musicPlayer = document.getElementById('musicPlayer');
 
 function pad(n){ return String(n).padStart(2,'0'); }
 
+function startMusic(){
+  if(!musicPlayer) return;
+
+  musicPlayer.muted = false;
+  musicPlayer.volume = 0.8;
+  musicPlayer.load();
+
+  const playPromise = musicPlayer.play();
+  if(playPromise && typeof playPromise.catch === 'function'){
+    playPromise.catch(() => {});
+  }
+}
+
 envelope.addEventListener('click', openEnvelope);
 
 function renderCountdown(){
@@ -46,9 +59,7 @@ function openEnvelope(){
   hintEl.textContent = 'membuka surat...';
   envelope.classList.add('open');
 
-  if(musicPlayer && musicPlayer.paused){
-    musicPlayer.play().catch(() => {});
-  }
+  startMusic();
 
   setTimeout(() => {
     envelopeStage.style.transition = 'opacity .6s ease';
