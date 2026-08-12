@@ -544,17 +544,41 @@ main{
   border-radius: 22px;
   padding: 18px 18px 16px;
   backdrop-filter: blur(8px);
+  display:flex;
+  flex-direction:column;
 }
 
 .message{
   font-family:'Cormorant Garamond', serif;
   font-size: 19px;
-  line-height: 1.86;
+  line-height: 1.92;
   color: var(--plum);
   text-align: left;
   white-space: pre-line;
-  margin-bottom: 18px;
-  max-width: 28ch;
+  margin-bottom: 14px;
+  max-width: none;
+  max-height: clamp(220px, 36vh, 320px);
+  overflow-y: auto;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(159, 47, 80, 0.45) transparent;
+}
+
+.message::-webkit-scrollbar{
+  width: 8px;
+}
+
+.message::-webkit-scrollbar-track{
+  background: transparent;
+}
+
+.message::-webkit-scrollbar-thumb{
+  background: rgba(159, 47, 80, 0.34);
+  border-radius: 999px;
+}
+
+.message::-webkit-scrollbar-thumb:hover{
+  background: rgba(159, 47, 80, 0.5);
 }
 
 .signoff{
@@ -623,7 +647,7 @@ main{
     height: 276px;
   }
   .message{
-    max-width: 32ch;
+    max-height: clamp(260px, 38vh, 360px);
   }
 }
 
